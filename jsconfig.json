@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    //"types":["vite/client"],
+    "jsx": "react",
+    "checkJs": true,
+    "allowJs": true,
+    "module": "es6",
+    //"moduleResolution": "node",
+    "target": "es6"
+  },
+  "exclude": ["node_modules"]
+}

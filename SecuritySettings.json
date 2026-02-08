@@ -1,0 +1,42 @@
+[
+    {
+        "icon": "",
+        "text": "password",
+        "url": "/password"
+    },
+    {
+        "icon": "",
+        "text": "pin  ",
+        "url": "/pin"
+    },
+    {
+        "icon": "",
+        "text": "device lock",
+        "url": "/device-lock"
+    },
+    {
+        "icon": "",
+        "text": "two step",
+        "url": "/two-step"
+    },
+    {
+        "icon": "",
+        "text": "support ",
+        "url": "/support"
+    },
+    {
+        "icon": "",
+        "text": "notice",
+        "url": "/notice"
+    },
+    {
+        "icon": "",
+        "text": "profile",
+        "url": "/profile"
+    },
+    {
+        "icon": "",
+        "text": "logout",
+        "url": "/logout"
+    }
+]

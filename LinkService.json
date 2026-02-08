@@ -1,0 +1,22 @@
+[
+    {
+        "icon": "fab fa-whatsapp",
+        "text": "whatsapp",
+        "url": ""
+    },
+    {
+        "icon": "fab fa-telegram",
+        "text": "telegram ",
+        "url": ""
+    },
+    {
+        "icon": "fab fa-youtube",
+        "text": "youtube",
+        "url": "https://www.youtube.com"
+    },
+    {
+        "icon": "fas fa-cart-shopping",
+        "text": "shopping",
+        "url": ""
+    }
+]

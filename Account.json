@@ -1,0 +1,22 @@
+[
+    {
+        "icon": " fa-solid fa-bangladeshi-taka-sign",
+        "text": "Add balance",
+        "url": ""
+    },
+    {
+        "icon": "fas fa-paper-plane",
+        "text": "send money ",
+        "url": ""
+    },
+    {
+        "icon": "fas fa-user-plus",
+        "text": "add user",
+        "url": ""
+    },
+    {
+        "icon": "fas fa-users",
+        "text": "my users",
+        "url": ""
+    }
+]

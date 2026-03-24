@@ -103,7 +103,7 @@ export default  () => {
                 <Category handler={getCategory} selected={filterData.category}/><GapV x='4'/>
                 <div>{/*driveData[filterData.opt]*/data?.drives?.map(({_id,operator,title,price,commission}) => <div key={_id} style={packtile} onClick={e=>onPackSelect(_id,operator,title,price,commission)}>
                     <h4>{title}</h4><GapV x='1'/>
-                    <FlexH x='space-between'><span>&#2547;{price}</span><span>&#2547;{commission}</span></FlexH>
+                    <FlexH x='space-between'><span>&#2547;{price-commission}</span><span>&#2547;{commission}</span></FlexH>
                 </div>)}
                 </div>
                 {/*driveData[filterData.opt]*/data?.pagination?.totalPage>1 && <PaginationBar><Pages totalPage={/*driveData[filterData.opt]*/data?.pagination?.totalPage} currentPage={data?.pagination?.currentPage} changePage={p=>pageNav(p)}/></PaginationBar>}

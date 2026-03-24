@@ -16,7 +16,7 @@ export default () =>{
   const {themeData,modeData} = useTheme();
   const location = useLocation();
   const [isNavExpanded,setIsNavExpanded] = useState(false)
-  const {isFailed,inboxCount,countFailedOrCancel:{deposit,withdraw,topup,drive,bill,bkash,dbbl,nagad}} = useNotification()
+  const {isFailed,inboxCount,countFailedOrCancel:{deposit,withdraw,topup,drive,bill,bkash,dbbl,nagad,bank}} = useNotification()
   
   useEffect(()=>{setIsNavExpanded(false)}, [location.pathname])
   
@@ -43,6 +43,7 @@ export default () =>{
               <li style={{color:getNavColor('mbank/bkash/history')}}><NavLink to='/mbank/bkash/history'>Bkash History</NavLink>{bkash>0&&<InlineBadge>{bkash}</InlineBadge>}</li>
               <li style={{color:getNavColor('mbank/dbbl/history')}}><NavLink to='/mbank/dbbl/history'>DBBL History</NavLink>{dbbl>0&&<InlineBadge>{dbbl}</InlineBadge>}</li>
               <li style={{color:getNavColor('mbank/nagad/history')}}><NavLink to='/mbank/nagad/history'>Nagad History</NavLink>{nagad>0&&<InlineBadge>{nagad}</InlineBadge>}</li>
+              <li style={{color:getNavColor('bank/history')}}><NavLink to='/bank/history'>Bank History</NavLink>{bank>0&&<InlineBadge>{bank}</InlineBadge>}</li>
             </ul>
           </li>
           <li><NavLink>Support&nbsp;<BsChevronDown/></NavLink>

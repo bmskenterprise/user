@@ -213,7 +213,7 @@ export const TypeInit = styled.div`
 `
 export const Select = styled.select`
   color: ${({theme})=>theme.modeData?.textPrimary};
-  padding: 0.8rem;
+  padding:0.6rem 0;
   text-transform: capitalize;
   background: transparent;font-size: 1.2rem;
   & >option{
@@ -353,7 +353,7 @@ export const DropdownItems = styled.div`
   left: 0;
   top: 0;
   background: ${({theme})=>theme.modeData?.backSecondary};
-  width: 100%;
+  width: 15rem;
   max-height: 150px;
   overflow-y: auto; 
   z-index: 1;

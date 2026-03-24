@@ -5,7 +5,9 @@ import {useTheme} from '../contexts/ThemeContext';
 export default ({items,toggleState,marked,handler}) =>{
   const {modeData:{backPrimary,backSecondary}} = useTheme();
   const [selected,setSelected] = useState(marked??items[0]);
-  useEffect(()=>{if(marked||items.length>0) setSelected(marked??items[0])}, [items,marked])
+  useEffect(()=>{
+    if(marked||items.length>0) setSelected(marked??items[0])
+  }, [items,marked])
   
   const onSelect = (name,icon) =>{handler(name,icon);setSelected({name,icon});/*toggleState.handler(false)*/}
   

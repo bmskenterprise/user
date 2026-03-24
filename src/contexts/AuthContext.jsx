@@ -59,9 +59,9 @@ export const AuthProvider = ({children}) =>{
       }catch(err){toast.error(`58.${err.status} ${err.message}`);}
       finally{setLoading(false);}
   }
-  const cacheRegData = rd=> setRegData(rd)
+  const cacheRegData = rd=> {console.log(rd);setRegData(rd);console.log(regData);}
   
-  const register = async () => {
+  const register = async (regData) => {
     const validations = validateUserRegister(regData);
     if(Object.keys(validations).length) {setErrors(validations);return}
     setLoading(true);

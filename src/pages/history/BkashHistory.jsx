@@ -1,5 +1,5 @@
 import {useEffect} from 'react';
-import MbankHistory from '../../components/MbankHistory';
+import MbankHistory from './MbankHistory';
 import {useAuth} from '../../contexts/AuthContext';
 import {useNotification} from '../../contexts/NotificationContext';
 

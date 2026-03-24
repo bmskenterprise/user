@@ -6,11 +6,14 @@ import {useAuth} from '../contexts/AuthContext';
 import {useTheme} from '../contexts/ThemeContext';
 import {FlexH,GapH,GapV,Avatar,Switch,IconButton,Icon} from '../components/styled';
 import url from '../config/url';
+import defaultAvatar from '../assets/user-profile-icon-circle_1256048-12499.jpg';
 
 export default ()  =>{
     const {user,fetchBio,bio,logout} = useAuth();
     const {themeData,modeData,thememode,toggleMode} = useTheme();
-    const [avatar,setAvatar] = useState(user?.avatar);
+    const [avatar,setAvatar] = useState(defaultAvatar);
+    
+    useEffect(()=>{if(user?.avatar){setAvatar(user.avatar)}}, [user])
     
     const uploadAvatar = e=> {
         const file = e.target.files[0];
@@ -20,7 +23,7 @@ export default ()  =>{
             reader.onloadend = async ()=>{
                 try{
                     const res = await fetch(url.urlAvatar,{
-                        method:'POST',
+                        method:'POST',credentials:'include',
                         headers:{'Content-Type':'application/json'},
                         body:JSON.stringify({avatar:reader.result})
                     });
@@ -30,35 +33,37 @@ export default ()  =>{
             }
         }
     }
-    const listtile = {background:modeData.backSecondary,cursor:'pointer'}
+    const listtile = {background:modeData.backSecondary,borderRadius:'0.25rem',cursor:'pointer',paddingBlock:'0.5rem',borderRadius:'0.5rem',width:'100%'}
     useEffect(()=>{fetchBio()}, [])
     const confirm = ()=>{
         Swal.fire({
             title: 'Want to logout?',
+            background: modeData.backSecondary,
             confirmButtonText: 'LOGOUT',
             showCancelButton: true,
             confirmButtonColor: themeData.themeBackground,
         }).then(result=>{if(result.isConfirmed) logout()})
     }
-    return <div>
+    return <div><GapV x='6'/>
         <FlexH x='space-between'>
             <FlexH x='flex-start'>
                 <div style={{position:'relative'}}>
-                    <Avatar size='8' src={avatar}/>
-                    <div style={{position:'absolute',bottom:'0',right:'0',background:'white',borderRadius:'50%',padding:'0.2rem'}}><label htmlFor='avatar'><Icon x='2'><MdCamera/></Icon></label><input type='file' id='avatar' onChange={uploadAvatar} hidden/></div>
-                </div><GapH x='2'/>
-                <div><h3>{bio?.fullname}</h3><h4>{user?.username}</h4></div>
+                    <label htmlFor='avatar'><Avatar size='4' src={avatar}/></label>
+                    <input type='file' id='avatar' onChange={uploadAvatar} hidden/></div>
+                    {/*<div style={{position:'absolute',bottom:'0',right:'0',background:'white',borderRadius:'50%',padding:'0.2rem'}}><Icon x='2'><MdCamera/></Icon>
+                </div>*/}<GapH x='1'/>
+                <div><h3>{bio?.fullname}</h3><GapV x='0.5'/><h4>{user?.username}</h4></div>
             </FlexH>
-            <div><IconButton><MdEdit/></IconButton></div>
-        </FlexH><GapV x='5'/>
+            <div><IconButton x='1.5'><MdEdit/></IconButton></div>
+        </FlexH><GapV x='6'/>
         <div>
-            <FlexH x='flex-start' style={listtile}><Icon x='2'><MdDeviceUnknown/></Icon><GapH x='2'/><h5>Device Lock</h5></FlexH><GapV x='3'/>
-            <FlexH x='flex-start' style={listtile}><Icon x='2'><MdShield/></Icon><GapH x='2'/><h5>Two Step</h5></FlexH><GapV x='3'/>
+            <FlexH x='flex-start' y='center' style={listtile}><Icon x='1.7'><MdDeviceUnknown/></Icon><GapH x='2'/><h4>Device Lock</h4></FlexH><GapV x='2'/>
+            <FlexH x='flex-start' y='center' style={listtile}><Icon x='1.7'><MdShield/></Icon><GapH x='2'/><h4>Two Step</h4></FlexH><GapV x='2'/>
             <FlexH x='space-between' style={listtile}>
-                <FlexH x='flex-start'><Icon x='2'><MdOutlineDarkMode/></Icon><GapH x='2'/><h5>Dark Theme</h5></FlexH>
+                <FlexH x='flex-start'><Icon x='1.7'><MdOutlineDarkMode/></Icon><GapH x='2'/><h4>Dark Theme</h4></FlexH>
                 <Switch /*theme={themeData}*/><input type='checkbox' checked={thememode=='dark'} onChange={e=>toggleMode(thememode=='dark'?'light':'dark')}/><span></span></Switch>
-            </FlexH><GapV x='3'/>
-            <FlexH x='flex-start' onClick={confirm} style={{...listtile,color:'red'}}><Icon x='2'><MdLogout/></Icon><GapH x='2'/><h5>Logout</h5></FlexH>
+            </FlexH><GapV x='2'/>
+            <FlexH x='flex-start' y='center' onClick={confirm} style={{...listtile,color:'red'}}><Icon x='1.7'><MdLogout/></Icon><GapH x='2'/><h4>Logout</h4></FlexH>
         </div>
     </div>
 }

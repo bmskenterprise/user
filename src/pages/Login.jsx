@@ -10,10 +10,10 @@ export default () =>{
   const [show,setShow] = useState(false)
   const {fetchUserLevels,levels,user,login,errors,loading} = useAuth()
   
-  if(user) return <Navigate to='/index'/>
-  
   useEffect(()=> {fetchUserLevels()},[])
   
+  if(user) return <Navigate to='/index'/>
+  console.log(levels);
   const handleSubmit = e=>{
     e.preventDefault()
     login({username:e.target.username.value,password:e.target.password.value})
@@ -21,7 +21,7 @@ export default () =>{
   return <FullScreen /*style={{position:'relative'}}*/>
     <Stack style={{width:'100%',height:'100%'}}>
       <div>
-        <h1>Login</h1><GapV x='8'/>
+        <h1 style={{color:textPrimary}}>Login</h1><GapV x='6'/>
         <CenterCard>
           <form onSubmit={handleSubmit}>
             <div>
@@ -29,12 +29,12 @@ export default () =>{
               <ErrorText>{errors?.username}</ErrorText>
             </div><GapV x='4'/>
             <div>
-              <div style={{position:'relative',width:'100%'}}><TextField type={show?'text':'password'} placeholder='Password' name='password'/><span style={{color:textPrimary,position:'absolute',top:'10%',right:'0%',zIndex:10}} onClick={e=>setShow(prev=>!prev)}>{show?<FaEyeSlash/>:<FaEye/>}</span></div>
+              <div style={{position:'relative',width:'100%'}}><TextField type={show?'text':'password'} placeholder='Password' name='password'/><span style={{color:textPrimary,position:'absolute',top:'25%',right:'0%',zIndex:10}} onClick={e=>setShow(prev=>!prev)}>{show?<FaEyeSlash/>:<FaEye/>}</span></div>
               <ErrorText>{errors?.password}</ErrorText>
             </div><GapV x='6'/>
             <FlexH x='center'><ThemeButton type='submit'>LOGIN</ThemeButton></FlexH>
           </form><GapV x='6'/>
-          <FlexH x='flex-end'>{levels?.length>0&&<span>Dont have account? <Link to='/register'>Register</Link></span>}</FlexH>
+          <FlexH x='flex-end'>{levels?.length>0&&<span style={{color:textPrimary}}>Dont have account? <Link to='/register'>Register</Link></span>}</FlexH>
         </CenterCard>
       </div>
       {loading&&<Loader><Spinner/></Loader>}

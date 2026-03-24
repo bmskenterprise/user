@@ -31,7 +31,7 @@ export default  () =>{
             })
             let data = await res.json()
             if(!res.ok) throw new Error(data.error)
-            if(data.statusRegFeePaid && hasVerification) navigate('/register/otp-verification',{state:{statusRegFeePaid:data.statusRegFeePaid}})
+            if(/*data.statusRegFeePaid &&*/ hasVerification) navigate('/register/otp-verification'/*,{state:{statusRegFeePaid:data.statusRegFeePaid}}*/)
             if(data.statusRegFeePaid) register()
         }catch(e) {toast.error(e.message)}
         finally{setLoading(false)}

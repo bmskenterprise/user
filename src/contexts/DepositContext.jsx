@@ -2,15 +2,15 @@ import {createContext,useContext,useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import toast from 'react-hot-toast';
 import {useAuth} from './AuthContext';
-import {validateDeposit,validatePayment,validateWithdraw} from '../utils/validate';
+import {validateDeposit,validatePayment,validateRefill,validateWithdraw} from '../utils/validate';
 import url from '../config/url';
 
 const DepositContext = createContext();
 
 export const DepositProvider = ({children}) =>{
-  const navigate = useNavigate;
+  const navigate = useNavigate();
   const {user} = useAuth();
-  const [balance,setBalance] = useState({});
+  const [balance,setBalance] = useState(null);
   const [depositRange,setDepositRange] = useState(null);
   const [pgws,setPGW] = useState(null);
   const [errors,setErrors] = useState({})
@@ -19,12 +19,13 @@ export const DepositProvider = ({children}) =>{
   const getToken = () => JSON.parse(localStorage.getItem('auth')).user[0]
   
   const fetchBalance = async () =>{
+    //if(balance) return  //
     try{
-      let res = await fetch(url.urlBalance,{credentials:'include'}); //
+      let res = await fetch(url.urlBalance,{credentials:'include'});
       let data = await res.json();
       if(res.status==401) navigate('/login')
       if(!res.ok) throw new Error(data.error)
-      setBalance(data['balances']);
+      setBalance(data);
     }catch(e) {toast.error(e.message)}
   }
   
@@ -46,13 +47,14 @@ export const DepositProvider = ({children}) =>{
       let data = await res.json();
       if(res.status==401) navigate('/login')
       if(!res.ok) throw new Error(data.error)
-      setPGW(data['pgws']);
+      setPGW(data);
     }catch(e) {toast.error(e.message)}
   }
   
   const depositByTXN = async (depositData) => {
     const validationResult = validateDeposit(depositData)
-    if(Object.keys(validationResult).length) {setErrors(validationResult);return} 
+    setErrors(validationResult);
+    if(Object.keys(validationResult).length) return 
     setLoading(true);
     try{
       let res = await fetch(url.urlDepositByTxn, {
@@ -71,47 +73,52 @@ export const DepositProvider = ({children}) =>{
   
   const depositByPayment = async (gateway,paymentData) => {
     const validationResult = validatePayment(paymentData)
-    if(Object.keys(validationResult).length) {setErrors(validationResult);return}
+    setErrors(validationResult);
+    if(Object.keys(validationResult).length) return
     setLoading(true);
     try{
       let res = await fetch(`${url.urlDepositPayment}/${gateway}`, {
         method: 'POST',
         credentials: 'include',
-        headers: {'Content-Type':'application/json',},
+        headers: {'Content-Type':'application/json'},
         body: JSON.stringify(paymentData)
       });
       let data = await res.json();
       if(res.status==401) navigate('/login')
       if(!res.ok){throw new Error(data.error || 'failed to deposit ');}
-      toast.success(data.message);navigate('/deposit/payment')
+      window.location.href=data.url;//fetchBalance();navigate('/deposit/payment')
     }catch(e) {toast.error(e.message);}
     finally{setLoading(false)}
   }
   
   
-  const balanceRefill = async (depositData,pin) =>{
+  const balanceRefill = async (refillData,pin) =>{
+    const validationResult = validateRefill(refillData,depositRange);
+    setErrors(validationResult);
+    if(Object.keys(validationResult).length) return
     setLoading(true);
     try{
       let res = await fetch(url.urlBalance, {
         method: 'POST',
         credentials:'include',
         headers: {'Content-Type':'application/json','x-user-pin':pin},
-        body: JSON.stringify(depositData)
+        body: JSON.stringify(refillData)
       });
       let data = await res.json();
       if(!res.ok){throw new Error(data.message || 'failed to refill balance');}
-      toast.success(data.message);
+      toast.success(data.message);fetchBalance();
     }catch(e) {toast.error(e.message);}
     finally{setLoading(false)}
   }
   
   
   const balanceWithdraw = async (withdrawData,pin) =>{
-    const validationErrors = validateWithdraw(withdrawData);
-    if(Object.keys(validationErrors).length) {setErrors(validationErrors);return}
+    const validationResult = validateWithdraw(withdrawData);
+    setErrors(validationResult);
+    if(Object.keys(validationResult).length) return
     setLoading(true);
     try{
-      let res = await fetch(`${url.urlDeposit}/transfer`, {
+      let res = await fetch(url.urlWithdraw, {
         method: 'POST',
         credentials:'include',
         headers: {'Content-Type':'application/json','x-user-pin':pin},

@@ -27,70 +27,94 @@ export const ScrollViewH = styled.div`
     display: none;
   }  
 `
-export const NavToggler = styled.div`
+export const Header = styled.div`
   background: ${({theme})=>theme.modeData?.backSecondary};
-  cursor: pointer;   //
-  padding: 1rem;
+  color: ${({theme})=>theme.modeData?.textPrimary};
+  height: 4rem;position: sticky;top: 0;left: 0;
+  width: 100vw;
+  z-index: 10;
+  /* display: flex;
+    flex-flow: row nowrap;
+  align-items: center;
+  justify-content: space-between;*/
+`
+
+export const NavToggler = styled.div`
+  //background: ${({theme})=>theme.modeData?.backSecondary};
+  cursor: pointer;width:15%;position: absolute;top:0;left: 0;
+  display: grid;place-items: center;height: 100%;z-index: 10;
   @media (min-width:768px){
     display: none;  
   }
 `
-/*     :   ;
-      max-height: 150px;
-      z-index: 1;*/
-export const Header = styled.div`
-  background: ${({theme})=>theme.modeData?.backPrimary};
-  color: ${({theme})=>theme.modeData?.textPrimary};
-  height: 4rem;position: sticky;top: 0;left: 0;
-  width: 100%;
-  padding: 1rem;
-    display: flex;background:red;
-    flex-flow: row nowrap;
-    align-items: center;
-    justify-content: space-between;
-`
-  /*@media  (min-width:768px){
-    & Burger{display: none;}
-  }*/
-
 export const Menu = styled.div`
-  //width: 100%;
+  width: 100%;
   height: 100%;
-  position: absolute;
-  & >ul {
-    display: ${({$toggleNav})=>$toggleNav?'block':'none'};
-    position: absolute;top: 100%;left: 0;
-  }
-  @media  (min-width:768px){
-    width: 80%;
+  position: absolute;top:0;right: 0;z-index: 9;
     display: flex;flex-flow:row nowrap;justify-content: flex-end;align-items: center;
-    & >ul{position:static}
-    & >ul >li{
-      //color: ${({theme})=>theme.modeData?.textPrimary};
-      display: inline-block;position: relative;
-      margin: 0 1rem;
-      & a{color: ${({theme})=>theme.modeData?.textPrimary};line-height: 3rem;}
-      & ul{
-        background: ${({theme})=>theme.modeData?.backPrimary};
-        display: none;
-        position: absolute;top: 100%;left: 0;width:14rem;
-      }
-      &:hover >ul{display: block;}
+  //}
+  & >ul {
+    width: 100vw;background: ${({theme})=>theme.modeData?.backSecondary};
+    height: 100vh;
+    display: ${({togglenav})=>togglenav?'block':'none'};
+    position: absolute;top: 100%;left: 0;
+    padding-left: 2rem;
+    @media (min-width:768px){
+      //display: block;
+      width:90%;
+      position:static;
+      height: 100%;display: flex;flex-flow:row nowrap;justify-content: flex-end;align-items: center;
+      gap:0 2rem;
     }
   }
+  & >ul >li{
+    margin:1rem 0 1rem;
+    @media (min-width:768px){
+      /*display: inline-block;*/position: relative;
+      //margin: 0 1rem;
+      //& a{color: ${({theme})=>theme.modeData?.textPrimary};line-height: 3rem;}
+      /*& ul{
+        background: ${({theme})=>theme.modeData?.backPrimary};
+        display: none;
+        position: absolute;top: 100%;left: 0;width:14rem;text-align: left;}*/
+      //&:hover >ul{display: block;}
+    }
+    & >ul{
+      background: ${({theme})=>theme.modeData?.backSecondary};
+      display: none;
+      margin-left:1rem;
+      @media (min-width: 768px){
+      position: absolute;top: 100%;left: 0;width:14rem;//text-align: left;
+      }
+    }
+    & a{color: ${({theme})=>theme.modeData?.textPrimary};line-height: 4rem;}
+    &:hover >ul{display:block;}
+  }
 `
-    //background: ;
-export const Badge = styled.div`
+
+export const ProfileSection = styled.div`
+  width: 10%;//margin-left: auto;
+`
+
+export const ProfileIcon = styled.div`
+  width: 5rem;
+  height: 4rem;
+  display: grid; 
+  place-items: center;
+  cursor: pointer;margin-left: auto;
+`
+export const Badge = styled.span`
   background: red;
+  border-radius: 50%;
   color: white;
-  position: absolute;top: -0.5rem;
-  left: -0.5rem;
+  @media (min-width:768px){position: absolute;top: 25%;
+  left: -0.5rem;}
   padding: 0.25rem 0.5rem;
 `
 export const InlineBadge = styled.span`
   background: red;
   color: white;
-  padding:0.25rem 0.5rem;font-size: 0.5rem;
+  padding:0.25rem 0.5rem;font-size: 0.8rem;
 `
 export const Section = styled.section`
   border: 1px solid #ddd;
@@ -108,15 +132,16 @@ export const FlexH = styled.div`
 
 export const FlexV = styled.div`
   display: flex;
-   flex-flow: column nowrap;
-    justify-content: ${({y})=>y};
-    align-items: ${({x})=>x};
+  flex-flow: column nowrap;
+  justify-content: ${({y})=>y};
+  align-items: ${({x})=>x};
 `
 export const GapV = styled.div`
   height: ${({x})=>x}rem;
 `
 export const GapH = styled.div`
-  width: ${({x})=>x}rem; 
+  width: ${({x})=>x}rem;
+  display: inline-block;
 `
 export const Avatar = styled.img`
   border-radius: 50%; 
@@ -124,10 +149,22 @@ export const Avatar = styled.img`
   width: ${({size})=>size}rem;
   height: auto;
 `
-export const IconButton = styled.button`
-  background: none;
-  border: none;
+export const BalanceButton = styled.button`
+  background: ${({theme})=>theme.modeData?.backPrimary};
+  border: none;border-radius: 1.5rem;
+  color: ${({theme})=>theme.modeData?.textPrimary};
+  font-size: 1.1rem;
   cursor: pointer;
+  padding: 0.4rem 1.5rem;outline:none;
+`
+
+export const IconButton = styled.button`
+  background: ${({theme})=>theme.modeData?.backSecondary};
+  border: none;
+  color: ${({theme})=>theme.modeData?.textPrimary};
+  cursor: pointer;
+  font-size: ${({size})=>size?size:'1'}rem;
+  padding: 0.5rem;outline:none;
 `
 export const ActionBtn = styled.div`
   background: ${({theme})=>theme.modeData?.backSecondary};
@@ -139,13 +176,13 @@ export const ActionBtn = styled.div`
   justify-content: space-between;
   height: 5rem;
   padding: 0.5rem;width: 20%;
-  & i{font-size: 2.2rem;}
-  & span{font-size: 1.1rem}
+  & i{font-size: 1.8rem;}
+  & span{font-size: 0.8rem}
 `
 
-export const ImageIcon = styled.img`
-    width: ${({x})=>x}rem;
-    height: ${({x})=>x}rem;
+export const Image = styled.img`
+  width: ${({x})=>x}rem;
+  height: ${({x})=>x}rem;
 `
 /*export const Icon = styled.img`
   width: ${({x})=>x}rem;
@@ -162,35 +199,45 @@ export const Icon = styled.i`
 `
 
 export const AmountOption = styled.button`
-    background: none;
-    border: 1px solid cyan;
-    border-radius: 1rem;
-    width: 100%;
+  background: none;
+  border: 1px solid cyan;
+  border-radius: 1rem;
 `
 
 
 export const TypeInit = styled.div`
-    background: white;
-    border-radius: 1rem;
+  background: white;border-radius: 1rem;
     position: absolute  ;top: 50%;left: 50%;
     width: 90%;
     transform: translate(-50%,-50%);
 `
 export const Select = styled.select`
-  background: transparent;
+  color: ${({theme})=>theme.modeData?.textPrimary};
+  padding: 0.8rem;
+  text-transform: capitalize;
+  background: transparent;font-size: 1.2rem;
   & >option{
     background: ${({theme})=>theme.modeData?.backSecondary};
     color: ${({theme})=>theme.modeData?.textPrimary};
   }
 `
+export const TA = styled.textarea`
+  background: transparent;
+  border: 1px solid ${({theme})=>theme?.modeData?.textPrimary};
+  color: ${({theme})=>theme?.modeData?.textPrimary};font-size: 1.5rem;
+  outline: none;
+  &:focus{border:1px solid ${({theme})=>theme?.themeData?.themeBackground};}
+`
 
 export const Field = styled.input`
   background: transparent;
   border: 1px solid ${({theme})=>theme.modeData?.textSecondary};
-  color: ${({theme})=>theme.modeData?.textPrimary};
+  color: ${({theme})=>theme.modeData?.textSecondary};
   outline: none;
   &:focus{border:1px solid ${({theme})=>theme.themeData?.themeBackground};}
   width: ${({x})=>x}rem;
+  font-size: 1.1rem;
+  padding: 0.2rem;
 `;
 export const TextField= styled.input`
   background:transparent;
@@ -204,7 +251,7 @@ export const TextField= styled.input`
 export const DatePicker = styled.input`
   background: transparent;
   border: 1px solid ${({theme})=>theme.modeData?.textPrimary};
-  color: ${({theme})=>theme.modeData?.textPrimary};
+  color: ${({theme})=>theme.modeData?.textPrimary};font-size: 1.2rem;
   outline: none;
   &:focus{border:1px solid ${({theme})=>theme.themeData?.themeBackground};}
   &::-webkit-calendar-picker-indicator {
@@ -214,9 +261,13 @@ export const DatePicker = styled.input`
 export const Switch = styled.label`
   position: relative;
   display: inline-block;
-  width: 48px;
-  height: 24px;
+  width: 44px;
+  height: 22px;
   cursor: pointer;
+  /*@media  (min-width:768px){
+    width: 48px;
+    height: 27px
+  }*/
   & input{
     opacity: 0;
     width: 0;
@@ -225,13 +276,18 @@ export const Switch = styled.label`
       background-color: ${({theme})=>theme.themeData?.themeBackground};
     }
     &:checked + span::before {
-      -webkit-transform: translateX(26px);
-      -ms-transform: translateX(26px);
-      transform: translateX(26px);
+      -webkit-transform: translateX(22px);
+      -ms-transform: translateX(22px);
+      transform: translateX(22px);
+      /*@media (min-width:768px){
+        -webkit-transform: translateX(21px);
+        -ms-transform: translateX(21px);
+        transform: translateX(21px);
+      }*/
     }
   }
   & span{
-    border-radius: 24px;
+    border-radius: 22px;
     position: absolute;
     cursor: pointer;
     top: 0;
@@ -239,19 +295,26 @@ export const Switch = styled.label`
     right: 0;
     bottom: 0;
     background-color: #ccc;
-    -webkit-transition: 0.4s;
-    transition: 0.4s;
+    -webkit-transition: 0.2s;
+    transition: 0.2s;
+    /*@media (min-width:768px) {
+      border-radius: 27px;
+    }*/
     &::before{
       background-color: white;
       border-radius: 50%;
-      bottom: 4px;
+      bottom: 2px;
       content: '';
       position: absolute;
-      height: 20px;
-      width: 20px;
-      left: 4px;
-      -webkit-transition: 0.4s;
-      transition: 0.4s;
+      height: 18px;
+      width: 18px;
+      left: 2px;
+      -webkit-transition: 0.2s;
+      transition: 0.2s;
+      /*@media (min-width:768px) {
+        width: 21px;
+        height: 21px;bottom:3px
+      }*/
     }
   }
 `
@@ -263,39 +326,62 @@ export const ThemeButton= styled.button`
   border-radius: 0.25rem;
   color:${({theme})=> theme.themeData?.themeText};
   cursor: pointer;
-  font-size: 1.5rem;
-  padding: 0.5rem 1rem;
+  font-size: 1.2rem;
+  padding: 0.3rem 0.6rem;
   outline: none;
   &:disabled{cursor: not-allowed}
 `;
 
 export const Dropdown = styled.div`
-    position: relative;
-    display: inline-block;
+  width: 100%;
+  position: relative;
+  height: 3rem;
+  //display: inline-block;
 `;    
 export const DropdownSelected = styled.div`
-  padding: 10px;
-  border: 1px solid #ccc;
-  cursor: pointer;display: flex;align-items: center;
-  & span{display: none;}
-  @media (min-width:768px){display: inline;}
+  border: 1px solid ${({theme})=>theme.modeData?.backSecondary};
+  cursor: pointer;display: flex;align-items: center;justify-content: flex-start;
+  padding-left: 0.5rem;
+  width: 100%;
+  height: 100%;
+  & h4{text-transform: capitalize;}
+  & span{color: ${({theme})=>theme.modeData?.textPrimary};}
+  //@media (min-width:768px){display: inline;}
 `    
 export const DropdownItems = styled.div`
-  display: none;
   position: absolute;
-  border: 1px solid #ccc;
-  background: white;
+  left: 0;
+  top: 0;
+  background: ${({theme})=>theme.modeData?.backSecondary};
   width: 100%;
   max-height: 150px;
   overflow-y: auto; 
   z-index: 1;
 `    
 export const DropdownItem = styled.div`
-    padding: 10px;
-      display: flex;
-      align-items: center;
-      cursor: pointer;
-`    
+  display: flex;justify-content: flex-start;
+  align-items: center;
+  & h4{text-transform: capitalize;}
+  //background: ${({theme})=>theme.modeData?.backPrimary};
+  color: ${({theme})=>theme.modeData?.textPrimary};
+  width: 100%;
+  height: 3rem;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  padding-left: 0.5rem;
+`    //
+
+
+export const TR = styled.tr`
+  background: ${({theme})=>theme.modeData?.backPrimary};
+  font-size: 0.8rem;
+  padding-block: 0.8rem;
+  @media (min-width:768px){
+    font-size: 1.3rem;
+  }
+`
+
 export const Pagination = styled.ul`
   display: flex;
   flex-flow: row nowrap;
@@ -329,10 +415,14 @@ export const Spinner = styled.div`
   height: ${({size})=> size?size:2}rem;
 `;
 
+export const Center = styled.div`
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+`
 export const Loader = styled.div`
   background:rgba(0,0,0,0.8);
-  width: 100%;
-  height: 100vh;
   position: absolute;
   //place-items: center;
   top: 0;

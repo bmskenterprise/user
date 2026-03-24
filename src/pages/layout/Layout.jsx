@@ -12,13 +12,15 @@ import NavBar from './NavBar'
 
 export default ({children}) =>{
   const {socket} = useNotification();
+  const {fetchUserAuth,user} = useAuth();
   const {modeData} = useTheme()
   const deposit = useDeposit();
   const api = useAPI();
   const telecom = useTelecom();
-  const history = useHistory();
-  const {fetchUserAuth,user} = useAuth();
-  useEffect(()=>{socket.emit('user:join',{username:user?.username,level:user?.level})},[socket])
+     
+  useEffect(()=>{
+    if(user) socket.emit('user:join',{username:user?.username,level:user?.level})
+  },[user])
   
   useEffect(()=>{
     if(!(!!user)) fetchUserAuth()
@@ -33,7 +35,7 @@ export default ({children}) =>{
   },[])
   
   return <div style={{background:modeData?.backPrimary,color:modeData?.textPrimary,minWidth:'100vw',minHeight:'100vh'}}>
-    <NavBar/><GapV x='3'/>
-    <div style={{minHeight:'100vh',maxWidth:'48rem',margin:'auto'}}>{children}</div>
+    <NavBar/> 
+    <div style={{minHeight:'100vh',maxWidth:'48rem',margin:'auto',padding:'0 2.5rem'}}>{(deposit.loading||api.loading||telecom.loading)?<Loader><Spinner/></Loader>:children}</div>
   </div>
 }

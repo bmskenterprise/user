@@ -24,7 +24,7 @@ export const ThemeProvider = ({children})=>{
         },
         light: {
             backPrimary:'#FAFAFA',
-            backSecondary:'#F9F9F9',
+            backSecondary:'#D9D9D9',
             textPrimary:'#212121',
             textSecondary:'#666666',
             glassmorph:{
@@ -33,7 +33,7 @@ export const ThemeProvider = ({children})=>{
             }
         },
     }
-    const [themeData, setThemeData] = useState(JSON.parse(localStorage.getItem('theme')) || {themeBackground:'#1B3C53', themeText:getComplementaryColor('#1B3C53')});
+    const [themeData, setThemeData] = useState(JSON.parse(localStorage.getItem('theme')) || {themeBackground:'#08599f', themeText:getComplementaryColor('#08599f')});
     const [modeData, setModeData] = useState(modes[appMode]);
     const toggleMode = (selectedMode)=>{
         localStorage.setItem('mode', selectedMode);

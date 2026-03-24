@@ -2,7 +2,7 @@ import {createContext,useContext,useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import toast from 'react-hot-toast';
 import url from '../config/url';
-import {validateMbank,validatePayBill,validateBank,validateFeedback} from '../utils/validate';
+import {validateMBankTransaction,validatePayBill,validateBank,validateFeedback} from '../utils/validate';
 
 const APIContext = createContext();
 
@@ -15,13 +15,13 @@ export const APIProvider = ({children}) =>{
   const [feedbacks,setFeedbacks] = useState([]);
   const [bankNames,setBankNames] = useState([]);
   const [notices,setNotices] = useState([])
-  const [modalNotices,setModalNotices] = useState([])
+  const [modalSession,setModalSession] = useState(true)
   const [errors,setErrors] = useState({})
   const [loading,setLoading] = useState(false);
   
-  const getToken = () => JSON.parse(localStorage.getItem('auth')).user[0];
+  const stopModalSession = () => setModalSession(false);
   const fetchSlideImages = async () =>{
-      if(slideImages.length) return
+      //if(slideImages.length) return
       try{
         let res = await fetch(url.urlImageSlider,{credentials:'include'});
         let data = await res.json();
@@ -31,7 +31,7 @@ export const APIProvider = ({children}) =>{
       }catch(e) {toast.error(e.message)}
   }
     const fetchMbanks = async () =>{
-      if(mbanks.length) return
+      //if(mbanks.length) return
       try{
         let res = await fetch(url.urlMBank,{credentials:'include'}); //
         let data = await res.json();
@@ -42,7 +42,7 @@ export const APIProvider = ({children}) =>{
     }
     
   const fetchContacts = async () =>{
-      if(contacts.length) return
+      //if(contacts.length) return
       setLoading(true)
       try{
         let res = await fetch(url.urlContacts,{credentials:'include'});
@@ -55,7 +55,7 @@ export const APIProvider = ({children}) =>{
   }
     
   const fetchSocialLinks = async () =>{
-      if(contacts.length) return
+      //if(socialLinks.length) return
       setLoading(true)
       try{
         let res = await fetch(url.urlSocialLinks,{credentials:'include'});
@@ -81,7 +81,8 @@ export const APIProvider = ({children}) =>{
     
   const addBillRequest = async (billData,pin) => {
     const validationResult = validatePayBill(billData)
-    if(Object.keys(validationResult).length) {setErrors(validationResult);return}
+    setErrors(validationResult);
+    if(Object.keys(validationResult).length) return
     setLoading(true);
     try{
       let res = await fetch(url.urlBill, {
@@ -100,7 +101,8 @@ export const APIProvider = ({children}) =>{
   
   const addBankRequest = async (bankData,pin) => {
     const validationResult = validateBank(bankData)
-    if(Object.keys(validationResult).length) {setErrors(validationResult);return}
+    setErrors(validationResult);
+    if(Object.keys(validationResult).length) return
     setLoading(true);
     try{
       let res = await fetch(url.urlBank, {
@@ -118,12 +120,14 @@ export const APIProvider = ({children}) =>{
   }
   
   const addMbankTransaction = async (mbankData,pin) => {
-    const validationResult = validateMbank(mbankData)
-    if(Object.keys(validationResult).length) {setErrors(validationResult);return}
+    const validationResult = validateMBankTransaction(mbankData)
+    setErrors(validationResult);
+    if(Object.keys(validationResult).length) return
     setLoading(true);
     try{
       let res = await fetch(url.urlMBank, {
         method: 'POST',
+        credentials:'include',
         headers: {'Content-Type':'application/json', 'x-user-pin':pin},
         body: JSON.stringify(mbankData)
       });
@@ -146,16 +150,18 @@ export const APIProvider = ({children}) =>{
         finally{setLoading(false)}
     }
   
-  const fetchModalNotices = async () =>{
+  const seenModalNotices = async () =>{
     try{
-      let res = await fetch(url.urlModalNotice,{credentials:'include'});
+      let res = await fetch(url.urlModalNoticeSeen,{
+        method: 'PATCH',
+        credentials:'include'
+      });
       let data = await res.json()
       if(!res.ok) throw new Error(data.error)
-      setModalNotices(data)
     }catch(e) {toast.error(e.message)}
   }
   
-  const fetchFeedbacks = async () =>{
+  /*const fetchFeedbacks = async () =>{
       setLoading(true)
       try{
         let res = await fetch(url.urlFeedback,{credentials:'include'});
@@ -165,11 +171,12 @@ export const APIProvider = ({children}) =>{
         setFeedbacks(data);
       }catch(e) {toast.error(e.message)}
       finally{setLoading(false)}
-  }
+  }*/
   const addFeedback = async (feedbackData,pin) => {
-    setLoading(true);
     const validationResult = validateFeedback(feedbackData)
-    if(Object.keys(validationResult).length) {setErrors(validationResult);return}
+    setErrors(validationResult);
+    if(Object.keys(validationResult).length) return
+    setLoading(true);
     try{
       let res = await fetch(url.urlFeedback, {
         method: 'POST',
@@ -185,7 +192,7 @@ export const APIProvider = ({children}) =>{
     finally{setLoading(false)}
   }
   
-  return <APIContext.Provider value={{fetchSlideImages,slideImages,fetchMbanks,mbanks,fetchContacts,fetchSocialLinks,socialLinks,contacts,fetchBankNames,bankNames,addBillRequest,addBankRequest,addMbankTransaction,fetchModalNotices,fetchNotices,modalNotices,notices,fetchFeedbacks,addFeedback,feedbacks,errors,loading}}>{children}</APIContext.Provider>;
+  return <APIContext.Provider value={{fetchSlideImages,slideImages,fetchMbanks,mbanks,fetchContacts,fetchSocialLinks,socialLinks,contacts,fetchBankNames,bankNames,addBillRequest,addBankRequest,addMbankTransaction,seenModalNotices,fetchNotices,modalSession,stopModalSession,notices,addFeedback,feedbacks,errors,loading}}>{children}</APIContext.Provider>;
   }
 
 export const useAPI = () => useContext(APIContext);

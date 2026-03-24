@@ -1,4 +1,10 @@
-import {Loader} from '../components/styled'
+import {useTheme} from '../contexts/ThemeContext';
+import {FullScreen,Center} from '../components/styled'
+
 export default () =>{
-  return <Loader><h2>404 Not Found</h2></Loader>
+  const {modeData} = useTheme()
+  
+  return <FullScreen>
+    <Center><h2 style={{color:modeData.textPrimary}}>404 Not Found</h2></Center>
+  </FullScreen>
 }

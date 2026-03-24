@@ -6,6 +6,7 @@ import {AuthProvider} from './contexts/AuthContext'
 import {NotificationProvider} from './contexts/NotificationContext'
 import {DepositProvider} from './contexts/DepositContext'
 import {APIProvider} from './contexts/APIContext'
+import {HistoryProvider} from './contexts/HistoryContext'
 import {TelecomProvider} from './contexts/TelecomContext'
 import './index.css'
 import App from './App.jsx'
@@ -17,9 +18,11 @@ createRoot(document.getElementById('root')).render(
         <NotificationProvider>
           <DepositProvider>
             <APIProvider>
-              <TelecomProvider>
-                <App />
-              </TelecomProvider>
+              <HistoryProvider>
+                <TelecomProvider>
+                  <App />
+                </TelecomProvider>
+              </HistoryProvider>
               <Toaster/>
             </APIProvider>
           </DepositProvider>

@@ -11,18 +11,19 @@ import DepositPayment from './pages/DepositPayment'
 import Drive from './pages/DrivePackage'
 import Regular from './pages/Re'
 import Topup from './pages/Topup'
-import Bkash from './pages/Bkash'
-//import DBBL from './pages/DBBL'
-//import Nagad from './pages/Nagad'
+import Mbank from './components/Mbank'
+import DBBL from './pages/DBBL'
+import Nagad from './pages/Nagad'
 import Bill from './pages/PayBill'
 import Bank from './pages/Bank'
 import DepositHistory from './pages/history/DepositHistory'
+import WithdrawHistory from './pages/history/WithdrawHistory'
 import TopupHistory from './pages/history/TopupHistory'
 import DriveHistory from './pages/history/DriveHistory'
 import BillHistory from './pages/history/PayBillHistory'
-import BkashHistory from './pages/history/BkashHistory'
-//import DBBLHistory from './pages/history/DBBLHistory'
-//import NagadHistory from './pages/history/NagadHistory'
+import MBankHistory from './pages/history/MbankHistory'
+import DBBLHistory from './pages/history/DBBLHistory'
+import NagadHistory from './pages/history/NagadHistory'
 import BankHistory from './pages/history/BankHistory'
 //import ChangePIN from './pages/ChangePIN'
 //import ChangePassword from './pages/ChangePassword'
@@ -59,25 +60,26 @@ export default() =>{
         <Route path='drive' element={<Drive/>}/>
         <Route path='regular' element={<Regular/>}/>
         <Route path='bill' element={<Bill/>}/>
-        <Route path='bkash' element={<Bkash/>}/>
-        {/*<Route path='dbbl' element={<DBBL/>}/>
-        <Route path='nagad' element={<Nagad/>}/>*/}
+        <Route path='mbank/:mbankType' element={<Mbank/>}/>
+        <Route path='dbbl' element={<DBBL/>}/>
+        <Route path='nagad' element={<Nagad/>}/>
         <Route path='bank' element={<Bank/>}/>
         <Route path='deposit/history' element={<DepositHistory/>}/>
+        <Route path='withdraw/history' element={<WithdrawHistory/>}/>
         <Route path='topup/history' element={<TopupHistory/>}/>
         <Route path='drive/history' element={<DriveHistory/>}/>
         <Route path='bill/history' element={<BillHistory/>}/>
-        <Route path='bkash/history' element={<BkashHistory/>}/>
-        {/*<Route path='nagad/history' element={<NagadHistory/>}/>
-        <Route path='dbbl/history' element={<DBBLHistory/>}/>
-        <Route path="password" element={<ChangePassword/>}/>
+        <Route path='mbank/:mbankType/history' element={<MBankHistory/>}/>
+        {/*<Route path='mbank/nagad/history' element={<NagadHistory/>}/>
+        <Route path='mbank/dbbl/history' element={<DBBLHistory/>}/>*/}
+        {/*<Route path="password" element={<ChangePassword/>}/>
         <Route path="pin" element={<ChangePIN/>}/>*/}
         <Route path='bank/history' element={<BankHistory/>}/>
         {/*</Route><Route path="device-lock" element={<DeviceLock/>}/>
         <Route path="two-step" element={<TwoStep/>}/>*/}
-        <Route path="notice" element={<Notice/>}/>
-        <Route path="profile" element={<Profile/>}/>
-        <Route path="contact" element={<Contacts/>}/>
+        <Route path='notice' element={<Notice/>}/>
+        <Route path='profile' element={<Profile/>}/>
+        <Route path='contact' element={<Contacts/>}/>
         <Route path='feedback' element={<Feedback/>}/>
       </Route> 
     </Routes>       

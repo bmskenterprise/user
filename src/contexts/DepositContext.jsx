@@ -72,9 +72,9 @@ export const DepositProvider = ({children}) =>{
   }
   
   const depositByPayment = async (gateway,paymentData) => {
-    const validationResult = validatePayment(paymentData)
+    /*const validationResult = validatePayment(paymentData)
     setErrors(validationResult);
-    if(Object.keys(validationResult).length) return
+    if(Object.keys(validationResult).length) return*/
     setLoading(true);
     try{
       let res = await fetch(`${url.urlDepositPayment}/${gateway}`, {
